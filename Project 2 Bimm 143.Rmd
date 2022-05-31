@@ -1,0 +1,124 @@
+---
+title: 'Angiotensin II Receptor Type 1 '
+output:
+  html_document:
+    df_print: paged
+---
+
+##Introduction
+
+**Scientific Question:**
+
+Is the angiotensin II receptor type 1 of a house mice more genetically expressed than a human, therefore
+explaining why there needs to be more blood regulation in mice due to their smaller bodies?
+
+**What is Angiotensin II type 1 receptor?**
+
+The angiotensin II receptor type 1 is a part of the renin-angiotensin system. The renin-angiotensin system is a regulator of blood volume and and maintain normal levels/processes for cardiovascular functions. When renin(enzyme) is released into the blood, it targets angiotensin which is then cleaved into angiotensin I. Then angiotensin I is now a inactivated predecessor that can be catalyzed by an enzyme to be convereted into angiotensin II type I receptor. 
+
+Mice have very similar functions to their biological and gene components as they have similar organs and systems. According to Jackson Laboratories that almost all the genes that mice have share funstion with genes that are in humans. For example, in our case angiotensin II receptor is also found in mice but with a ditinct modification although humans have only one type one receptor. Mice have two angiotensin II subtype receptors, there is 1a and 1b. They angiotensin II receptor type 1a in mice regulates blood pressure and contributes to many cardiovascular function(Chia_Hua et al. 2008.) Meanwhile angiotensin II receptor type 1b doesn't have any evidence of contributing to functions of type 1a there is an association between type 1b and vasculature contractility. Vasculature contractility which is the regulation of lumenal diameter of the resistance vessels, which makes it a significant contribution to setting the level of blood pressure and blood flow(Shao-wei et al. 2017.)  
+
+*Sources*
+- https://www.ncbi.nlm.nih.gov/books/NBK470410/
+
+- https://www.ahajournals.org/doi/10.1161/atvbaha.118.311282
+
+- https://www.jax.org/why-the-mouse/excellent-models#:~:text=Humans%20and%20mice%20don't,lungs%2C%20kidneys%2C%20etc.)
+
+- https://medlineplus.gov/genetics/gene/agtr1/#:~:text=Variations%20in%20the%20AGTR1%20gene,diabetes%20that%20affects%20kidney%20function.
+
+- https://www.nature.com/articles/aps201718#:~:text=Vascular%20contractility%20depends%20on%20vascular,blood%20flow%20to%20vascular%20beds.
+
+**Scientific Hypothesis:**
+
+If the angiotensin recpetor II type 1 were to be more genetically expressed in mice that would then explain that mice need more blood regulation than humans due to their higher heart rate and respiratory rate because of thier body size.
+
+**Data Analyses**
+
+I decided to use data from NCBI's gene bank. There where 3 data sets that I used which are angiotensin II receptor, type 1a and type 1 b from *Mus musculus*(house mouse.) Then the third data set was angiotensin II receptor type 1 *Homo sapiens*. Below I am going to perform a pairwise sequence alignment, a differential expression alignment, and a heat map. I am going to use the pairwise sequence alignment to compare compare similar regions between the RNA sequences. The purpose of the differential expression alignment and the heat map is to identify whether angiotensin II receptor is more expressed in mice or a human. The differential expression alignment gives us which genes are activated, as well as give us a read count of each gene. Then heat map visually shows which genes are activated and give a range of how expressed they are by the boldness of the color.
+
+##What are the Packages for?
+
+**Pairwise Sequence Alignment**
+
+```{r}
+library(Biostrings)
+library(seqinr)
+```
+
+
+**Heat Map**
+
+```{r}
+
+```
+
+
+**Differential Expression Alignment**
+
+```{r}
+
+```
+
+
+
+
+
+##Data Analysis
+
+**Data Sets**
+
+The data sets below are looking at the gene angiotensin II receptor from two different species. Below I have listed the reference number
+and the species correlated with it.
+
+*Homo sapiens*(human) type 1: NC_000003.12
+
+Mus musculus(house mouse) type 1a: NC_000079.7
+
+*Mus musculus*(house mouse) house mouse type 1b:NC_000069.7 
+
+**Pairwise Sequence Alignment**
+
+```{r}
+#setwd is a function that creates a path for R to access a file on a computer
+#setwd("~/Documents/AGTR1")
+
+#This is a pairwise sequence alignment that never worked where the purpose of it was to turn the three fasta files into a list but it didnt work properly.
+#Source: https://www.biostars.org/p/153010/
+#setwd("~/Documents/AGTR1")
+#files = list.files(pattern="*.fasta")
+#seq = lapply(files, readAAStringSet)
+
+#pws.alignments <- sapply(1:(length(seq)), function(ind)
+#{
+#sapply((ind):length(seq), function(sec.ind)
+#{
+#return(pairwiseAlignment(seq[[ind]], seq[[sec.ind]]))
+#})
+#})
+
+#the read.fasta file reads in a file from the computer.then using a vector to name it.
+#mousetype1a <- read.fasta(file = "mousetype1a.fasta")
+#mousetype1b <- read.fasta(file = "mousetype1b.fasta")
+#humantype1 <- read.fasta(file = "humantype1.fasta")
+
+
+
+#mousetype1a_seq <- mousetype1a[[1]]
+#mousetype1b_seq <- mousetype1b[[1]]
+#humantype1_seq <- humantype1[[1]]
+```
+
+
+**Heat Map**
+```{r}
+
+```
+
+**Differential Expression Alignment**
+```{r}
+
+```
+
+
+
