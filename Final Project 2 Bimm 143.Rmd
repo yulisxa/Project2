@@ -1,0 +1,230 @@
+---
+title: 'Final Angiotensin II Receptor Type 1 '
+output:
+  html_document:
+    df_print: paged
+---
+
+**by Yulissa Lopez**
+
+# Introduction
+
+**Scientific Question:**
+
+Is the angiotensin II receptor type 1 of a house mice more genetically expressed than a human, therefore
+explaining why there needs to be more blood regulation in mice due to their smaller bodies?
+
+**What is Angiotensin II type 1 receptor?**
+
+The angiotensin II receptor type 1 is a part of the renin-angiotensin system. The renin-angiotensin system is a regulator of blood volume and and maintain normal levels/processes for cardiovascular functions. When renin(enzyme) is released into the blood, it targets angiotensin which is then cleaved into angiotensin I. Then angiotensin I is now a inactivated predecessor that can be catalyzed by an enzyme to be convereted into angiotensin II type I receptor. 
+
+Mice have very similar functions to their biological and gene components as they have similar organs and systems. According to Jackson Laboratories that almost all the genes that mice have share funstion with genes that are in humans. For example, in our case angiotensin II receptor is also found in mice but with a ditinct modification although humans have only one type one receptor. Mice have two angiotensin II subtype receptors, there is 1a and 1b. They angiotensin II receptor type 1a in mice regulates blood pressure and contributes to many cardiovascular function(Chia_Hua et al. 2008.) Meanwhile angiotensin II receptor type 1b doesn't have any evidence of contributing to functions of type 1a there is an association between type 1b and vasculature contractility. Vasculature contractility which is the regulation of lumenal diameter of the resistance vessels, which makes it a significant contribution to setting the level of blood pressure and blood flow(Shao-wei et al. 2017.)  
+
+*Sources*
+- https://www.ncbi.nlm.nih.gov/books/NBK470410/
+
+- https://www.ahajournals.org/doi/10.1161/atvbaha.118.311282
+
+- https://www.jax.org/why-the-mouse/excellent-models#:~:text=Humans%20and%20mice%20don't,lungs%2C%20kidneys%2C%20etc.)
+
+- https://medlineplus.gov/genetics/gene/agtr1/#:~:text=Variations%20in%20the%20AGTR1%20gene,diabetes%20that%20affects%20kidney%20function.
+
+- https://www.nature.com/articles/aps201718#:~:text=Vascular%20contractility%20depends%20on%20vascular,blood%20flow%20to%20vascular%20beds.
+
+**Scientific Hypothesis:**
+
+If the angiotensin receptor II type 1 were to be more genetically expressed in mice that would then explain that mice need more blood regulation than humans due to their higher heart rate and respiratory rate because of their body size.
+
+**Data Analyses**
+
+I decided to use data from NCBI's gene bank. There where 3 data sets that I used which are angiotensin II receptor, type 1a and type 1 b from *Mus musculus*(house mouse.) Then the third data set was angiotensin II receptor type 1 *Homo sapiens*. Below I am going to perform a multiple sequence alignment, homology model, and a heat map. I am going to use the multiple sequence alignment to compare similar regions between the RNA sequences. The purpose of the heat map is to identify whether angiotensin II receptor is more expressed in mice or a human. The homology model is going to allow us to compare the structure of AGTR gene. Then heat map visually shows which genes are activated and give a range of how expressed they are by the boldness of the color.
+
+# What are the Packages for?
+
+**Multiple Sequence Alignment**
+
+Biostrings: it is a package that can manipulate, match, and differentiate biological sequences. 
+
+Protor: is a package that can download protein sequences from various representation schemes by putting an ID number of the gene(s), for this code the sequence is being downloaded from UniProt.
+
+MSA: the multiple sequence alignment package is used to store multiple alignment algorithm results.  
+
+```{r}
+library(Biostrings)
+library(protr)
+library(msa)
+```
+*Source*
+
+- https://www.rdocumentation.org/packages
+
+- https://r-graph-gallery.com/215-the-heatmap-function.html
+
+**Heat Map**
+
+BiocManager: the first if statement up to BiocManager install is a package that that allows one to install, update, and decide what version to download or use for the code.
+
+Biostrings: we use this package for the heatmap as well. It is a package that can manipulate, match, and differentiate biological sequences. 
+
+ggmsa: it is a package that gives multiple visual outputs of different sequence alignments. 
+
+RColorBrewer: this package is used to add or choose the color of a diffrent graphical outputs. In this case we use it to choose the color of the heatmap.
+
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ggmsa")
+
+library(Biostrings)
+library(ggmsa)
+library(RColorBrewer)
+```
+*Source*
+
+- https://r-graph-gallery.com/215-the-heatmap-function.html
+
+**Homology Modeling and  Structural  Bioinformatics**
+
+NGLVieweR: is a way to view different protein and molecular structures through PDB files. 
+
+bio3d.view: gives a 3-D interactive visualization, in our case we use it to look at AGTR.
+
+```{r}
+library(NGLVieweR)
+library(bio3d.view)
+```
+*Source*
+
+- https://bioboot.github.io/bimm143_S19/class-material/lecture11-BIMM143_F18.pdf
+
+- https://nvelden.github.io/NGLVieweR/index.html 
+
+- http://thegrantlab.org/bio3d_v2/html/dist.xyz.html
+
+- http://thegrantlab.org/bio3d_v2/html/vignettes/Bio3D_pca.pdf
+
+
+
+
+# Data Analysis
+
+**Data Sets**
+
+The data sets below are looking at the gene angiotensin II receptor from two different species. Below I have listed the reference number and the species correlated with it. As well as the NCBI UniProt IDs.
+
+*Homo sapiens*(human) type 1: NC_000003.12, P30556
+
+*Mus musculus*(house mouse) type 1a: NC_000079.7, P29754 
+
+*Mus musculus*(house mouse) type 1b:NC_000069.7, P29755
+
+**Multiple Sequence Alignment**
+
+The purpose of a multiple sequence alignment is to see which genes and proteins are similar between multiple specimen. As well to compare and contrast the species sequence of the gene. First the data is read in from NCBI UniProt using the ID's.Then once the ID's are read in from UniProt we use the AAStringSet to store the sequence together as if it was a fasta. Then the msa function is used to compare the sequences between the specimen. 
+
+
+```{r}
+#UniProt genes are being read in to a single vector to have the ID's in one place
+IDs <- c("P30556", "P29754", "P29755")
+#The ID's are then read into the code from the database by using the getUniProt function. 
+Proteins_IDs <- getUniProt(IDs)
+#The vector is getting renamed from ID's to Proteins_IDs
+names(Proteins_IDs) <- IDs
+#All of the sequences from the ID are being stored in one place to then be stored through a fasta file, then be able to manipulate the sequence.The 'multifasta' is now considered a global variable as it is used throughout the code in different chunks.
+multifasta <- Biostrings::AAStringSet(unlist(Proteins_IDs))
+# This allows it to be stored to a fast file.
+Biostrings::writeXStringSet(multifasta, "your_multifasta.fa")
+# We use the msa to analyze the different sequences.
+specimen_MSA <- msa(multifasta)
+#This then prints the complete analysis.
+print(specimen_MSA, show="complete")
+
+```
+
+
+**Heat Map**
+
+The purpose of the heat map is used to identify how expressed the gene is in  multiple specimen. The way it is produced is by using a matrix from the fasta file made in the previous chunk. It is then used to make a matrix to be able to give a visual output by doing a piecewise function then using it to visualize the heatmap. 
+
+```{r}
+#This function is used to retrieve the piece of sequence that is going to be analyzed from the file.  
+ggmsa(multifasta, start = 295, end = 360) 
+
+x <- 1:length(multifasta) 
+
+#The sequences are then put into a matrix.
+forheatmap <- matrix(nrow=length(x), ncol=length(x))
+
+for (i in x) {
+  for (j in x){
+    
+    QuerySeq <- multifasta[i]
+    DatabaseSeq <- multifasta[j]
+#Pulls out just the sequences to be able to store it as an AAStringSetList
+    QS_I = AAStringSetList(QuerySeq) 
+#The next function leaves the AAStringSet as a character string
+    as.character(unlist(QS_I))
+#The function turns character string into a character list, named QS_CL
+    QS_CL = as(QS_I, "CharacterList") 
+#This function turns it from a character list to a plain list
+    as.list(QS_CL) 
+    
+    DBS_I = AAStringSetList(DatabaseSeq)
+    as.character(unlist(DBS_I))
+    DBS_CL = as(DBS_I, "CharacterList")
+    as.list(DBS_CL)
+    
+    PA <- pairwiseAlignment(pattern = c(DBS_CL), subject = QS_CL)
+    
+    forheatmap[i,j] <- score(PA)
+    forheatmap
+  }
+}
+#The data for the heatmap is then created. 
+forheatmap
+#This function then gives the visualization of the heatmap using the data from 'forheatmap', which then we customize the name of the rows, columns, and decide the color. 'heatmap' is now considered a local variable as it is only used to print out the visualization of the heatmap from the data.
+heatmap(forheatmap, scale="column", cexRow=2, labRow=paste("AGTR_", rownames(data)), col =colorRampPalette(brewer.pal(8, "Blues"))(25))
+
+
+```
+
+*Source*
+
+- https://canvas.ucsd.edu/courses/35373/files/6482394?module_item_id=1263438&fd_cookie_set=1
+
+- https://stackoverflow.com/questions/70029953/how-to-a-fasta-file-with-multiple-sequences-in-it-within-r
+
+**Homology Modeling and Structural Bioinformatic**
+
+The purpose homology modeling and structural bioinformatic is to get a 3-D visualization of the gene, to be able to compare the structures. The data read in is from the PDB database using the package and then is printed using the 'addRepresentation' function to create the interactive visualization using the 'bio3d.view' package. 
+
+```{r}
+
+#The data is read in from PDB database
+NGLVieweR("6JOD") %>%
+#The function is then used to create the interactive structure of the AGTR gene in humans
+addRepresentation("cartoon")
+
+#The data is read in from PDB database
+NGLVieweR("2WXY") %>%
+#The function is then used to create the interactive structure of the AGTR gene 1a and 1b in mice
+addRepresentation("cartoon")
+
+```
+*Source*
+
+- https://www.rcsb.org/structure/2WXY
+
+- https://www.rcsb.org/structure/6JOD
+
+# Analyzing the Results
+
+After looking at the multiple sequence alignment it is noticeable that all three specimens are very similar to one another. As each other as the genes almost match one another. For the heatmap and multiple sequence alignment the AGTR gene in Homo sapiens(human) type 1 is numbered as one, Mus musculus(house mouse) type 1a is numbered as 2, Mus musculus(house mouse) type 1b is numbered as 3. Comparing the three genes in section of the sequence chosen there are a total of 10 mismatches of the total 65 length sequence for each specimen. Then based on the heat map above since certain genes are the same color it proves that those genes are very similar. As for which is more expressed it looks that comparing AGTR type 1a humans express it more than mice. Therefore proving my hypothesis incorrect. That human express more over AGTR than mice, therefore regulating more blood regardless of its size and heart beats per minute. Then by looking at the number of coils in the protein structure you can see the mice's structure is similar smaller version of a humans structure. As there are a lot of smooth loops in both but humans have more coils in the protein structure but neither have b-strand arrows. Over all the data analysis proved that the AGTR 1 gene in humans and mice have similar functions and are almost the same sequence. Although regardless of the similarity humans express the AGTR 1 gene more than mice, therefore proving my hypothesis incorrect.
+
+
+
+
+
+
+
